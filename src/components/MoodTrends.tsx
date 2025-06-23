@@ -3,7 +3,7 @@ import { TrendingUp, BarChart3, Calendar, Target, Sparkles } from 'lucide-react'
 import { getMoodTrends, getMoodEntries } from '../utils/moodData';
 
 const MoodTrends: React.FC = () => {
-  const trends = getMoodTrends(30); // Last 30 days
+  const trends = getMoodTrends(30);
   const allEntries = getMoodEntries();
 
   const moodColors: Record<string, string> = {
@@ -26,7 +26,6 @@ const MoodTrends: React.FC = () => {
     neutral: '😐'
   };
 
-  // Calculate mood distribution
   const moodCounts = allEntries.reduce((acc, entry) => {
     acc[entry.mood] = (acc[entry.mood] || 0) + 1;
     return acc;
@@ -39,7 +38,6 @@ const MoodTrends: React.FC = () => {
     percentage: (count / totalEntries) * 100
   }));
 
-  // Group trends by week
   const weeklyData = trends.reduce((acc, entry) => {
     const date = new Date(entry.date);
     const weekStart = new Date(date);
@@ -81,7 +79,7 @@ const MoodTrends: React.FC = () => {
 
       {trends.length === 0 ? (
         <div className="bg-white rounded-2xl p-12 text-center shadow-xl border border-gray-100 animate-fadeInUp">
-          <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse-custom">
+          <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <BarChart3 className="w-12 h-12 text-gray-400" />
           </div>
           <h3 className="text-2xl font-semibold text-gray-900 mb-4">No Data Yet</h3>
@@ -95,7 +93,7 @@ const MoodTrends: React.FC = () => {
           {/* Mood Distribution */}
           <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-100 card-hover animate-fadeInUp stagger-1">
             <h3 className="text-xl font-bold text-gray-900 mb-8 flex items-center">
-              <BarChart3 className="w-6 h-6 mr-3 text-blue-600 animate-bounce-custom" />
+              <BarChart3 className="w-6 h-6 mr-3 text-blue-600" />
               Mood Distribution
             </h3>
             
@@ -105,7 +103,7 @@ const MoodTrends: React.FC = () => {
                 .map(({ mood, count, percentage }, index) => (
                   <div key={mood} className={`flex items-center space-x-4 p-3 rounded-lg transition-all duration-300 hover:scale-105 animate-fadeInUp stagger-${index + 1}`}>
                     <div className="flex items-center space-x-3 w-32">
-                      <span className="text-2xl animate-pulse-custom">{moodEmojis[mood]}</span>
+                      <span className="text-2xl">{moodEmojis[mood]}</span>
                       <span className="text-sm font-medium capitalize text-gray-700">
                         {mood}
                       </span>
@@ -141,7 +139,7 @@ const MoodTrends: React.FC = () => {
           {/* Weekly Averages */}
           <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-100 card-hover animate-fadeInUp stagger-2">
             <h3 className="text-xl font-bold text-gray-900 mb-8 flex items-center">
-              <Calendar className="w-6 h-6 mr-3 text-purple-600 animate-bounce-custom" />
+              <Calendar className="w-6 h-6 mr-3 text-purple-600" />
               Weekly Intensity
             </h3>
             
@@ -152,13 +150,13 @@ const MoodTrends: React.FC = () => {
                 weekEnd.setDate(weekDate.getDate() + 6);
                 
                 return (
-                  <div key={week} className={`p-4 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 transition-all duration-300 hover:scale-105 hover:shadow-md animate-fadeInUp stagger-${index + 1}`}>
+                  <div key={week} className={`p-4 rounded-xl bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200 transition-all duration-300 hover:scale-105 animate-fadeInUp stagger-${index + 1}`}>
                     <div className="flex items-center justify-between mb-3">
                       <div className="text-sm font-medium text-gray-900">
                         {weekDate.toLocaleDateString()} - {weekEnd.toLocaleDateString()}
                       </div>
                       <div className="flex items-center space-x-2">
-                        <span className="text-xl animate-pulse-custom">{moodEmojis[dominantMood]}</span>
+                        <span className="text-xl">{moodEmojis[dominantMood]}</span>
                         <span className="text-sm text-gray-600 capitalize font-medium">
                           {dominantMood}
                         </span>
@@ -190,7 +188,7 @@ const MoodTrends: React.FC = () => {
           {/* Recent Trends */}
           <div className="lg:col-span-2 bg-white rounded-2xl p-8 shadow-xl border border-gray-100 card-hover animate-fadeInUp stagger-3">
             <h3 className="text-xl font-bold text-gray-900 mb-8 flex items-center">
-              <Target className="w-6 h-6 mr-3 text-green-600 animate-bounce-custom" />
+              <Target className="w-6 h-6 mr-3 text-green-600" />
               Recent Mood Timeline
             </h3>
             
@@ -210,12 +208,12 @@ const MoodTrends: React.FC = () => {
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-4">
-                        <span className="text-3xl animate-pulse-custom">{moodEmojis[entry.mood]}</span>
+                        <span className="text-3xl">{moodEmojis[entry.mood]}</span>
                         <div>
                           <div className="font-semibold text-gray-900 capitalize flex items-center space-x-2">
                             <span>{entry.mood}</span>
                             {isToday && (
-                              <span className="px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs rounded-full font-bold animate-glow">
+                              <span className="px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs rounded-full font-bold">
                                 Today
                               </span>
                             )}
